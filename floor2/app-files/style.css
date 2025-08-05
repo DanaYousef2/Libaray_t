@@ -112,8 +112,8 @@ body.multiple-scenes.mobile #titleBar {
   height: 50px;
 }
 
-body.fullscreen-enabled #fullscreenToggle {
-  display: block;
+#fullscreenToggle {
+  display: block !important;
 }
 
 #fullscreenToggle .icon {

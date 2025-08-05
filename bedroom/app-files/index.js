@@ -121,9 +121,9 @@
   autorotateToggleElement.addEventListener('click', toggleAutorotate);
 
   // Set up fullscreen mode, if supported.
-  if (screenfull.enabled && data.settings.fullscreenButton) {
+  if (screenfull && screenfull.enabled) {
     document.body.classList.add('fullscreen-enabled');
-   fullscreenToggleElement.addEventListener('click', function () {
+fullscreenToggleElement.addEventListener('click', function () {
   const pano = document.getElementById('pano');
 
   // إذا كنا بالفعل داخل الفل سكرين نخرج منه
@@ -152,6 +152,7 @@
     fullscreenToggleElement.classList.add('enabled');
   }
 });
+    
   } else {
     document.body.classList.add('fullscreen-disabled');
   }
@@ -304,82 +305,80 @@
   }
 
   function createInfoHotspotElement(hotspot) {
-
     // Create main wrapper
     var wrapper = document.createElement('div');
     wrapper.classList.add('hotspot');
     wrapper.classList.add('info-hotspot');
-
+  
     // Header section
     var header = document.createElement('div');
     header.classList.add('info-hotspot-header');
-
+  
     var iconWrapper = document.createElement('div');
     iconWrapper.classList.add('info-hotspot-icon-wrapper');
     var icon = document.createElement('img');
     icon.src = 'img/info.png';
     icon.classList.add('info-hotspot-icon');
     iconWrapper.appendChild(icon);
-
+  
     var titleWrapper = document.createElement('div');
     titleWrapper.classList.add('info-hotspot-title-wrapper');
     var title = document.createElement('div');
     title.classList.add('info-hotspot-title');
     title.innerHTML = hotspot.title;
     titleWrapper.appendChild(title);
-
+  
     var closeWrapper = document.createElement('div');
     closeWrapper.classList.add('info-hotspot-close-wrapper');
     var closeIcon = document.createElement('img');
     closeIcon.src = 'img/close.png';
     closeIcon.classList.add('info-hotspot-close-icon');
     closeWrapper.appendChild(closeIcon);
-
+  
     header.appendChild(iconWrapper);
     header.appendChild(titleWrapper);
     header.appendChild(closeWrapper);
-
+  
     // Content section (text + audio if exists)
     var contentWrapper = document.createElement('div');
     contentWrapper.classList.add('info-hotspot-text');
-
+  
     // Add text
     var text = document.createElement('div');
     text.innerHTML = hotspot.text;
     contentWrapper.appendChild(text);
-
-    // Add audio player directly under the text if exists
+  
+    // Add audio directly inside the text box
     if (hotspot.audio) {
-        var audio = document.createElement('audio');
-        audio.src = hotspot.audio;
-        audio.controls = true;
-        audio.style.width = '100%';
-        audio.style.marginTop = '10px';
-        contentWrapper.appendChild(audio);
+      var audio = document.createElement('audio');
+      audio.src = hotspot.audio;
+      audio.controls = true;
+      audio.style.width = '100%';
+      audio.style.marginTop = '10px';
+      contentWrapper.appendChild(audio);
     }
-
-    // Append header and content to main wrapper
+  
+    // Append everything to the main wrapper
     wrapper.appendChild(header);
     wrapper.appendChild(contentWrapper);
-
+  
     // Modal version for mobile
     var modal = document.createElement('div');
     modal.innerHTML = wrapper.innerHTML;
     modal.classList.add('info-hotspot-modal');
     document.body.appendChild(modal);
-
+  
     var toggle = function () {
-        wrapper.classList.toggle('visible');
-        modal.classList.toggle('visible');
+      wrapper.classList.toggle('visible');
+      modal.classList.toggle('visible');
     };
-
+  
     wrapper.querySelector('.info-hotspot-header').addEventListener('click', toggle);
     modal.querySelector('.info-hotspot-close-wrapper').addEventListener('click', toggle);
-
+  
     stopTouchAndScrollEventPropagation(wrapper);
-
     return wrapper;
-}
+  }   
 
   // Prevent touch and scroll events from reaching the parent element.
   function stopTouchAndScrollEventPropagation(element, eventList) {
