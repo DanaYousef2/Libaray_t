@@ -121,7 +121,7 @@
   autorotateToggleElement.addEventListener('click', toggleAutorotate);
 
   // Set up fullscreen mode, if supported.
-  if (screenfull.enabled && data.settings.fullscreenButton) {
+if (screenfull && screenfull.enabled) {
     document.body.classList.add('fullscreen-enabled');
 fullscreenToggleElement.addEventListener('click', function () {
   const pano = document.getElementById('pano');
